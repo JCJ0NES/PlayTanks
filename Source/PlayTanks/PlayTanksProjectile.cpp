@@ -23,11 +23,16 @@ APlayTanksProjectile::APlayTanksProjectile()
 	// Use a ProjectileMovementComponent to govern this projectile's movement
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement0"));
 	ProjectileMovement->UpdatedComponent = ProjectileMesh;
+	ProjectileMovement->Friction = 0.f;
+	ProjectileMovement->bBounceAngleAffectsFriction = false;
 	ProjectileMovement->InitialSpeed = 3000.f;
 	ProjectileMovement->MaxSpeed = 3000.f;
 	ProjectileMovement->bRotationFollowsVelocity = true;
-	ProjectileMovement->bShouldBounce = false;
+	ProjectileMovement->bShouldBounce = true;
+	ProjectileMovement->Bounciness = 1.f;
 	ProjectileMovement->ProjectileGravityScale = 0.f; // No gravity
+	ProjectileMovement->SetPlaneConstraintEnabled(true);
+	ProjectileMovement->SetPlaneConstraintNormal(FVector(0.0f, 0.0f, 1.0f));
 
 	// Die after 3 seconds by default
 	InitialLifeSpan = 3.0f;
@@ -41,5 +46,5 @@ void APlayTanksProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActo
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 20.0f, GetActorLocation());
 	}
 
-	Destroy();
+	//Destroy();
 }

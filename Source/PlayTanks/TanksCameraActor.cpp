@@ -23,13 +23,13 @@ void ATanksCameraActor::BeginPlay()
 		// We always want to tick after the actor we're tracking - it avoids visual jitter.
 		PrimaryActorTick.AddPrerequisite(GetInstigator(), GetInstigator()->PrimaryActorTick);
 	}
-	else 
-	{
-		if (APlayerController* PC = Cast<APlayerController>(GetController()))
-		{
-			PC->SetViewTarget(this);
-		}
-	}
+	//else 
+	//{
+	//	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	//	{
+	//		PC->SetViewTarget(this);
+	//	}
+	//}
 }
 
 ATanksChaseCam::ATanksChaseCam()
