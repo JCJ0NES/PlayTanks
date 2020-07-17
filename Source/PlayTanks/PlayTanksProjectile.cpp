@@ -40,11 +40,28 @@ APlayTanksProjectile::APlayTanksProjectile()
 
 void APlayTanksProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	// Only add impulse and destroy projectile if we hit a physics
-	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
+	//Destroy projectile on second bounce. Or destroy object and projectile on first bounce for certain objects. 
+	//Currently uses physics as a means to determine if it should be destroyed. I am trying to change this to something more practical so physics can still be used for something else.
+	if (bHasBounced)
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 20.0f, GetActorLocation());
+		if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
+		{
+			OtherActor->Destroy();//AddImpulseAtLocation(GetVelocity() * 20.0f, GetActorLocation());
+		}
+		Destroy();
 	}
+	else if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
+	{
+		OtherActor->Destroy();
+		Destroy();
+	}
+	else
+	{
+		bHasBounced = true;
+	}
+
+	// Only add impulse and destroy projectile if we hit a physics
+	
 
 	//Destroy();
 }

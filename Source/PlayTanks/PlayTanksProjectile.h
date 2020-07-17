@@ -22,6 +22,9 @@ class APlayTanksProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+private:
+	uint8 bHasBounced;
+
 public:
 	APlayTanksProjectile();
 
